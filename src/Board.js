@@ -25,6 +25,13 @@ class Board extends React.Component {
     });
   }
 
+  handleRestartClick() {
+    this.setState({
+      squares: Array(9).fill(null),
+      xIsNext: true
+    })
+  }
+
   renderSquare(i) {
     return <Square
       value={this.state.squares[i]}
@@ -56,6 +63,7 @@ class Board extends React.Component {
 
     return (
       <div>
+        <button onClick={() => this.handleRestartClick()}>Restart</button>
         <div className="status">{status}</div>
         {this.renderBoard()}
       </div>
