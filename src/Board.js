@@ -18,6 +18,7 @@ class Board extends React.Component {
     }
 
     squares[i] = this.state.xIsNext ? 'X':'O';
+
     this.setState({
       squares: squares,
       xIsNext: !this.state.xIsNext
@@ -29,6 +30,19 @@ class Board extends React.Component {
       value={this.state.squares[i]}
       onClick={() => this.handleClick(i)}
     />;
+  }
+
+  renderBoard() {
+    const board = [];
+    let squares = [];
+    for (let i = 0; i < 9; i++) {
+      squares.push(this.renderSquare(i));
+      if ((i + 1) % 3 === 0) {
+        board.push(<div className="board-row"> {squares} </div>);
+        squares = [];
+      }
+    }
+    return board;
   }
 
   render() {
@@ -43,21 +57,7 @@ class Board extends React.Component {
     return (
       <div>
         <div className="status">{status}</div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
+        {this.renderBoard()}
       </div>
     );
   }
