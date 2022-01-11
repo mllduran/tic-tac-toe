@@ -6,12 +6,12 @@ class Game extends React.Component {
     super(props);
     this.state = {
       history: [Array(9).fill(null)],
+      undoHistory: [],
       xIsNext: true
     };
   }
 
   handleTurnClick(i) {
-    console.log("i:", i)
     const squares = this.state.history[0].slice();
 
     if (calculateWinner(squares) || squares[i]) {
@@ -29,6 +29,7 @@ class Game extends React.Component {
   handleRestartClick() {
     this.setState({
       history: [Array(9).fill(null)],
+      undoHistory: [],
       xIsNext: true
     });
   }
@@ -42,8 +43,23 @@ class Game extends React.Component {
 
     this.setState({
       history: [...undoMove],
+      undoHistory: [this.state.history[0], ...this.state.undoHistory],
       xIsNext: !this.state.xIsNext
     })
+  }
+
+  handleRedoClick() {
+    if (this.state.undoHistory.length <= 0) {
+      return;
+    }
+
+    const undoHistory = [...this.state.undoHistory];
+
+    this.setState({
+      history: [undoHistory[0], ...this.state.history],
+      undoHistory: [...this.state.undoHistory.splice(1)],
+      xIsNext: !this.state.xIsNext
+    });
   }
 
   render() {
@@ -64,6 +80,7 @@ class Game extends React.Component {
           <div className="status">{status}</div>
           <button onClick={() => this.handleRestartClick()}>Restart</button>
           <button onClick={() => this.handleUndoClick()}>Undo</button>
+          <button onClick={() => this.handleRedoClick()}>Redo</button>
           <ol>{/* TODO */}</ol>
         </div>
       </div>
