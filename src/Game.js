@@ -45,7 +45,7 @@ class Game extends React.Component {
       history: [...undoMove],
       undoHistory: [this.state.history[0], ...this.state.undoHistory],
       xIsNext: !this.state.xIsNext
-    })
+    });
   }
 
   handleRedoClick() {
@@ -58,6 +58,28 @@ class Game extends React.Component {
     this.setState({
       history: [undoHistory[0], ...this.state.history],
       undoHistory: [...this.state.undoHistory.splice(1)],
+      xIsNext: !this.state.xIsNext
+    });
+  }
+
+  renderHistory() {
+    return this.state.history.map((h,i) => {
+      return (
+        <p onClick={() => this.handleHisory(i)}>Turn: {i}</p>
+      )
+    })
+  }
+
+  handleHisory(i) {
+    if (this.state.history.length <= 1) {
+      return;
+    }
+
+    const undoMove = this.state.history.slice(i);
+
+    this.setState({
+      history: [...undoMove],
+      undoHistory: [this.state.history[0], ...this.state.undoHistory],
       xIsNext: !this.state.xIsNext
     });
   }
@@ -82,6 +104,7 @@ class Game extends React.Component {
           <button onClick={() => this.handleUndoClick()}>Undo</button>
           <button onClick={() => this.handleRedoClick()}>Redo</button>
           <ol>{/* TODO */}</ol>
+          {this.renderHistory()}
         </div>
       </div>
     );
