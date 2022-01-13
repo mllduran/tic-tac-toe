@@ -65,17 +65,17 @@ class Game extends React.Component {
   renderHistory() {
     return this.state.history.map((h,i) => {
       return (
-        <p onClick={() => this.handleHisory(i)}>Turn: {i}</p>
+        <p onClick={() => this.handleHistory(i)}>Turn: {i}</p>
       )
     })
   }
 
-  handleHisory(i) {
+  handleHistory(i) {
     if (this.state.history.length <= 1) {
       return;
     }
 
-    const undoMove = this.state.history.slice(i);
+    const undoMove = this.state.history.slice(-i);
 
     this.setState({
       history: [...undoMove],
