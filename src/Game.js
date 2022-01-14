@@ -65,7 +65,14 @@ class Game extends React.Component {
   renderHistory() {
     return this.state.history.map((h,i) => {
       return (
-        <p onClick={() => this.handleHistory(i)}>Turn: {i}</p>
+        <Board
+            key={"board"+i}
+            row={3}
+            column={3}
+            makeTurn={() => this.handleHistory(i)}
+            history={this.state.history[i]}
+          />
+        // <p >Turn: {i}</p>
       )
     })
   }
@@ -96,7 +103,13 @@ class Game extends React.Component {
     return (
       <div className="game">
         <div className="game-board">
-          <Board key="board" makeTurn={(i) => this.handleTurnClick(i)} history={this.state.history} />
+          <Board
+            key="board"
+            row={3}
+            column={3}
+            makeTurn={(i) => this.handleTurnClick(i)}
+            history={this.state.history[0]}
+          />
         </div>
         <div className="game-info">
           <div className="status">{status}</div>
