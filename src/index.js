@@ -1,9 +1,16 @@
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './index.css';
 
-import Game from './Game';
+import App from './App';
 
 ReactDOM.render(
-  <Game />,
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<App />}/>
+      <Route path="/tic-tac-toe" element={<App />}/>
+      <Route path="/" element={<App />}/>
+    </Routes>
+  </BrowserRouter>,
   document.getElementById('root')
 );
